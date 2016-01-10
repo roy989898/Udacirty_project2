@@ -33,6 +33,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    private static final String API_URL_TOP ="http://api.themoviedb.org/3/movie/top_rated";
+    private static final String API_KEY_POP= "http://api.themoviedb.org/3/movie/popular";
+    private static final String API_KEY = "db9db09d5d4c08b057a2aefbeea458b0";
     final String IMAGE = "images";
     final String BASE_URL = "base_url";
     final String POSTER_Z = "poster_sizes";
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         myArrayAdapter = new MyArrayAdapter(this, movieArrayList);
         gridView.setAdapter(myArrayAdapter);
         gridView.setOnItemClickListener(this);
-        
+
     }
 
 
