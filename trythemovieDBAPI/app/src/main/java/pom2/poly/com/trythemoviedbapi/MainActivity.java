@@ -26,15 +26,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.RestAdapter;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String API_URL_TOP ="http://api.themoviedb.org/3/movie/top_rated";
-    private static final String API_KEY_POP= "http://api.themoviedb.org/3/movie/popular";
+    private static final String API_URL_POP= "http://api.themoviedb.org/3/movie/popular";
     private static final String API_KEY = "db9db09d5d4c08b057a2aefbeea458b0";
     final String IMAGE = "images";
     final String BASE_URL = "base_url";
@@ -411,5 +414,53 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         }
     }
+    /*private class GdataFromMOVIEDBtask_V2 extends AsyncTask<Void, Void, Movie_LIST> {
+        RestAdapter restAdapter;
+
+
+        @Override
+        protected Movie_LIST doInBackground(Void... params) {
+            IApiMethods methods = restAdapter.create(IApiMethods.class);
+            Movie_LIST movielist = methods.getCurators(API_KEY);
+
+            return movielist;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String API_URL="";
+            switch (perf_sort_op) {
+
+                case "pop": {
+                    API_URL=API_URL_POP;
+                }
+                break;
+
+
+                case "top": {
+                    API_URL=API_URL_TOP;
+                }
+                break;
+            }
+
+            restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(API_URL)
+                    .build();
+        }
+
+        @Override
+        protected void onPostExecute(Movie_LIST movie_list) {
+            super.onPostExecute(movie_list);
+            if (movie_list != null) {
+                List<Movi_e> movieArray = movie_list.getResults();
+                Log.i("GdataFromMOVIEDBtask", "in onPostExecute");
+                movieArrayList.clear();
+
+                movieArrayList.addAll(movieArray);
+                myArrayAdapter.notifyDataSetChanged();
+            }
+        }
+    }*/
 }
 
