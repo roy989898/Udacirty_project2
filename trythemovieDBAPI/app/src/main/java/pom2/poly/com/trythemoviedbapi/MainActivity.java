@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     final String IMAGE = "images";
     final String BASE_URL = "base_url";
     final String POSTER_Z = "poster_sizes";
+    final String MOVIE_KEY = "getTHeMovie";
     @Bind(R.id.gridView)
     GridView gridView;
 
@@ -59,14 +59,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        movieArrayList = new ArrayList<>();
+        if (savedInstanceState != null) {
+            movieArrayList = (ArrayList<Movie>) savedInstanceState.get(MOVIE_KEY);
+        } else {
+            movieArrayList = new ArrayList<>();
+        }
         myArrayAdapter = new MyArrayAdapter(this, movieArrayList);
         gridView.setAdapter(myArrayAdapter);
         gridView.setOnItemClickListener(this);
-
-
-
+        
     }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(MOVIE_KEY, movieArrayList);
+    }
+
 
     private void updateMovie() {
         GdataFromMOVIEDBtask task = new GdataFromMOVIEDBtask();
@@ -330,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             return null;
         } else {
             for (int i = 0; i < movieArray.size(); i++) {
-                Movie aMovie = new Movie(config.get(POSTER_Z), config.get(BASE_URL),config.get("backdrop_sizes"));
+                Movie aMovie = new Movie(config.get(POSTER_Z), config.get(BASE_URL), config.get("backdrop_sizes"));
 
                 Map<String, String> map = movieArray.get(i);
                 aMovie.setOverview(map.get("overview"));
